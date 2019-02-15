@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class DadosSimulacaoDTO {
 	
 	/**
-	 * Valor solicitado para simular o emprestimo
+	 * Valor solicitado para simular o emprestimo.
 	 */
 	private BigDecimal valorSolicitado;
 	
