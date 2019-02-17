@@ -4,7 +4,9 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +21,7 @@ import br.com.gilmagno.cadastroclientes.entities.Cliente;
 import br.com.gilmagno.cadastroclientes.exceptions.ServicoException;
 import br.com.gilmagno.cadastroclientes.services.ClienteService;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/clientes")
 public class ClienteController {
@@ -32,20 +35,28 @@ public class ClienteController {
 	
 	@GetMapping
 	public ResponseEntity<List<Cliente>> listarTodosClientesAtivos() throws ServicoException{
-		return ResponseEntity.ok().body(this.clienteService.listarClientesAtivos());
+		return ResponseEntity.ok()
+				//.header("Access-Control-Allow-Origin", "*")
+			    .body(this.clienteService.listarClientesAtivos());
 	}
-	
+
 	@GetMapping(path = {"/{id}"})
 	public ResponseEntity<Cliente> consultarPorCodigo(@PathVariable long id) throws ServicoException{
 		Cliente cliente = clienteService.consultarPorCodigo(id);
 		
 		if (cliente != null) {
-			return ResponseEntity.ok(cliente);	
+			return ResponseEntity.ok()
+					//.header("Access-Control-Allow-Origin", "*")
+					//.header("Access-Control-Allow-Methods", "POST, GET, PUT, UPDATE, OPTIONS")
+				    //.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With")
+					.body(cliente);	
 		}else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.notFound()
+					.header("Access-Control-Allow-Origin", "*")
+					.build();
 		}
 	}
-	
+
 	@PostMapping
 	public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) throws ServicoException{
 		if (cliente != null) {
@@ -54,10 +65,14 @@ public class ClienteController {
 			
 			URI url = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(clienteAtualizado.getCodigo()).toUri();
 			
-			return ResponseEntity.created(url).build();
+			return ResponseEntity.created(url)
+					.header("Access-Control-Allow-Origin", "*")
+					.build();
 			
 		}else {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest()
+					.header("Access-Control-Allow-Origin", "*")
+					.build();
 		}
 	}
 	
@@ -76,9 +91,13 @@ public class ClienteController {
 			clienteAlterado.setValorTotalDividas(cliente.getValorTotalDividas());
 			clienteAlterado.setValorTotalPatrimonio(cliente.getValorTotalPatrimonio());
 			
-			return ResponseEntity.ok(clienteService.salvar(clienteAlterado));
+			return ResponseEntity.ok()
+					//.header("Access-Control-Allow-Origin", "*")
+					.body(clienteService.salvar(clienteAlterado));
 		}else {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest()
+					//.header("Access-Control-Allow-Origin", "*")
+					.build();
 		}
 	}
 	
@@ -89,9 +108,13 @@ public class ClienteController {
 		if (clienteParaDeletar != null) {
 			clienteService.excluir(id);
 			
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok()
+					//.header("Access-Control-Allow-Origin", "*")
+					.build();
 		}else {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest()
+					//.header("Access-Control-Allow-Origin", "*")
+					.build();
 		}
 	}
 }

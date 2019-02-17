@@ -1,0 +1,47 @@
+<div class="example-container mat-elevation-z8">
+    <div class="example-loading-shade"
+         *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <div class="button-row">
+      <a mat-flat-button color="primary" [routerLink]="['/clientes']"><mat-icon>list</mat-icon></a>
+    </div>
+    
+    <mat-card class="example-card">
+      <form [formGroup]="simulacaoForm" (ngSubmit)="onFormSubmit(simulacaoForm.value)">
+          <h3>Simulação de Emprestimo</h3>
+            <mat-form-field class="example-full-width">
+              <input matInput [(ngModel)]="nomeCliente">
+            </mat-form-field>
+      
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Valor Solicitado" formControlName="valorSolicitado" type="number">
+              <input hidden formControlName="taxaJuros">
+              <mat-error>
+                <span *ngIf="!simulacaoForm.get('valorSolicitado').valid && simulacaoForm.get('valorSolicitado').touched">Digite o valor solicitado</span>
+              </mat-error>
+            </mat-form-field>
+      
+            <mat-form-field class="example-full-width">
+                <input matInput placeholder="Duração (meses)" formControlName="mesesDuracao" type="number" max="200">
+                <mat-error>
+                  <span *ngIf="!simulacaoForm.get('mesesDuracao').valid && simulacaoForm.get('mesesDuracao').touched">Digite a quantidade de meses de duração do emprestimo</span>
+                </mat-error>
+              </mat-form-field>
+
+            <h4>Resultado</h4>
+            <section class="example-section">
+              <span>{{valorPrestacao}}</span>
+            </section>
+
+            <section class="example-section">
+                <span>{{valorTotal}}</span>
+            </section>
+
+
+        <div class="button-row">
+          <button type="submit" [disabled]="!simulacaoForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+        </div>
+      </form>
+    </mat-card>
+  </div>

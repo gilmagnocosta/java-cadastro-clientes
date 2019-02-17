@@ -1,5 +1,6 @@
 package br.com.gilmagno.cadastroclientes.entities;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -9,16 +10,29 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Classe de entidade de representação da tabela de Clientes
+ * @author Gilmagno
+ *
+ */
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "clientes")
-public class Cliente {
+public class Cliente implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +61,4 @@ public class Cliente {
 	
 	@Column(name = "tipo", nullable = false)
 	private Integer tipoCliente;
-	
-	@Column(name = "ativo", nullable = false)
-	private Boolean ativo;
 }

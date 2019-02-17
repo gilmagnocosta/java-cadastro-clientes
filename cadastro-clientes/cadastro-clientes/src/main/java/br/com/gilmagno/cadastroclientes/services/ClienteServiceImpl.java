@@ -1,5 +1,6 @@
 package br.com.gilmagno.cadastroclientes.services;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,6 @@ public class ClienteServiceImpl implements ClienteService {
 	public List<Cliente> listarClientesAtivos() throws ServicoException {
 		try {
 			Cliente cliente = new Cliente();
-			cliente.setAtivo(true);
 			Example<Cliente> filtro = Example.of(cliente);
 			
 			return clienteRepository.findAll(filtro);
@@ -91,11 +91,11 @@ public class ClienteServiceImpl implements ClienteService {
 	 * @throws Exception
 	 */
 	private void validarTipoCliente(Cliente cliente) throws Exception {
-		if (cliente.getTipoCliente() == TipoClienteEnum.Comum.getValor() && cliente.getAtualmenteEmpregado() == null) {
+		if (cliente.getTipoCliente() == null || (cliente.getTipoCliente() == TipoClienteEnum.Comum.getValor() && cliente.getAtualmenteEmpregado() == null)) {
 			throw new Exception("Informe se o cliente está atualmente empregado!");
-		}else if (cliente.getTipoCliente() == TipoClienteEnum.Especial.getValor() && cliente.getAtualmenteEmpregado() == null) {
+		}else if (cliente.getTipoCliente() == null || (cliente.getTipoCliente() == TipoClienteEnum.Especial.getValor() && (cliente.getValorTotalPatrimonio() == null || cliente.getValorTotalPatrimonio() == BigDecimal.ZERO))) {
 			throw new Exception("Informe o valor total do patrimonio do cliente!");
-		}else if (cliente.getTipoCliente() == TipoClienteEnum.Potencial.getValor() && cliente.getAtualmenteEmpregado() == null) {
+		}else if (cliente.getTipoCliente() == null || (cliente.getTipoCliente() == TipoClienteEnum.Potencial.getValor() && (cliente.getValorTotalDividas() == null || cliente.getValorTotalDividas() == BigDecimal.ZERO))) {
 			throw new Exception("Informe o valor total de dividas atuais do cliente!");
 		}
 	}

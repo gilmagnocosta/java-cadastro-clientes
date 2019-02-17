@@ -1,0 +1,90 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button color="primary" [routerLink]="['/clientes']"><mat-icon>list</mat-icon></a>
+  </div>
+  <mat-card class="example-card">
+    <form [formGroup]="clienteForm" (ngSubmit)="onFormSubmit(clienteForm.value)">
+      
+      <mat-form-field class="example-full-width" appearance="outline">
+        <mat-label>Risco do Cliente</mat-label>
+        <input matInput placeholder="Risco" disabled formControlName="risco" [(ngModel)]='risco'>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Nome do Cliente" formControlName="nome"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!clienteForm.get('nome').valid && clienteForm.get('nome').touched">Digite o nome do cliente</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Endereço" formControlName="endereco"
+               [errorStateMatcher]="matcher">
+        <mat-error>
+          <span *ngIf="!clienteForm.get('endereco').valid && clienteForm.get('endereco').touched">Digite o endereço do cliente</span>
+        </mat-error>
+      </mat-form-field>
+
+      
+      
+      <mat-form-field class="example-full-width">
+          <select matNativeControl placeholder="Tipo" formControlName="tipoCliente" [errorStateMatcher]="matcher">
+            <option value="">Selecione</option>
+            <option value="1">Comum</option>
+            <option value="2">Especial</option>
+            <option value="3">Potencial</option>
+          </select>
+          <mat-error>
+            <span *ngIf="!clienteForm.get('tipoCliente').valid && clienteForm.get('tipoCliente').touched">Escolha o tipo do cliente</span>
+          </mat-error>
+        </mat-form-field>
+      
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Rendimento Mensal" formControlName="rendimentoMensal" type="number" (keyup)="definirRisco()"
+               [errorStateMatcher]="matcher">
+        <span matPrefix>R$&nbsp;</span>
+        <mat-error>
+          <span *ngIf="!clienteForm.get('rendimentoMensal').valid && clienteForm.get('rendimentoMensal').touched">Digite o rendimento mensal do cliente</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Valor do Patrimônio" formControlName="valorTotalPatrimonio" type="number">
+        <span matPrefix>R$&nbsp;</span>
+        <mat-error>
+            <div *ngIf="f.valorTotalPatrimonio.errors">
+                <span *ngIf="!f.valorTotalPatrimonio.valid && f.valorTotalPatrimonio.touched">Digite o valor total do patrimonio do cliente</span>
+                <span *ngIf="f.valorTotalPatrimonio.errors.ehObrigatorio">Cliente tipo Especial precisa ser informado o valor do patrimonio.</span>
+            </div>          
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Valor total das dividas" formControlName="valorTotalDividas" type="number">
+        <span matPrefix>R$&nbsp;</span>
+        <mat-error>
+            <div *ngIf="f.valorTotalDividas.errors">
+              <span *ngIf="f.valorTotalDividas.errors.ehObrigatorio">Cliente tipo Potencial precisa ser informado o valor total das dividas.</span>
+              <span *ngIf="!f.valorTotalDividas.valid && f.valorTotalDividas.touched">Digite o valor total das dividas do cliente</span>
+            </div>
+            
+        </mat-error>
+      </mat-form-field>
+
+      <section class="example-section">
+        <mat-checkbox formControlName="atualmenteEmpregado">Atualmente empregado</mat-checkbox>
+      </section>
+
+      
+
+      <div class="button-row">
+        <button type="submit" [disabled]="!clienteForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
+      </div>
+    </form>
+  </mat-card>
+</div>
