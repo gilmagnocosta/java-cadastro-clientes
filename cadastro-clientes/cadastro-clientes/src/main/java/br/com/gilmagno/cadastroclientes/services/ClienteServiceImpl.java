@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import br.com.gilmagno.cadastroclientes.entities.Cliente;
@@ -45,15 +44,12 @@ public class ClienteServiceImpl implements ClienteService {
 	}
 	
 	/**
-	 * Listar todos os clientes ativos
+	 * Listar todos os clientes
 	 */
 	@Override
-	public List<Cliente> listarClientesAtivos() throws ServicoException {
+	public List<Cliente> listarClientes() throws ServicoException {
 		try {
-			Cliente cliente = new Cliente();
-			Example<Cliente> filtro = Example.of(cliente);
-			
-			return clienteRepository.findAll(filtro);
+			return clienteRepository.findAll();
 		}catch (Exception e) {
 			throw new ServicoException("Erro ao listar os cliente", e);
 		}

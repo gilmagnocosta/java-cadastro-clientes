@@ -21,11 +21,11 @@ public interface ClienteService {
 	Cliente consultarPorCodigo(Long codigo) throws ServicoException;
 	
 	/**
-	 * Listar todos os clientes ativos
+	 * Listar todos os clientes
 	 * @return
 	 * @throws ServicoException
 	 */
-	List<Cliente> listarClientesAtivos() throws ServicoException;
+	List<Cliente> listarClientes() throws ServicoException;
 	
 	/**
 	 * Salva os dados de um determinado cliente

@@ -1,6 +1,5 @@
 package br.com.gilmagno.cadastroclientes.controllers;
 
-import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -38,13 +37,24 @@ public class ClienteController {
 		this.emprestimoService = emprestimoService;
 	}
 	
+	/**
+	 * Action para consultar todos os clientes
+	 * @return
+	 * @throws ServicoException
+	 */
 	@GetMapping
-	public ResponseEntity<List<Cliente>> listarTodosClientesAtivos() throws ServicoException{
+	public ResponseEntity<List<Cliente>> listarTodosClientes() throws ServicoException{
 		return ResponseEntity.ok()
 				//.header("Access-Control-Allow-Origin", "*")
-			    .body(this.clienteService.listarClientesAtivos());
+			    .body(this.clienteService.listarClientes());
 	}
 
+	/**
+	 * Action para consultar um cliente pelo seu codigo
+	 * @param id
+	 * @return
+	 * @throws ServicoException
+	 */
 	@GetMapping(path = {"/{id}"})
 	public ResponseEntity<Cliente> consultarPorCodigo(@PathVariable long id) throws ServicoException{
 		Cliente cliente = clienteService.consultarPorCodigo(id);
@@ -62,6 +72,12 @@ public class ClienteController {
 		}
 	}
 
+	/**
+	 * Action para inserção de novo cliente
+	 * @param cliente
+	 * @return
+	 * @throws ServicoException
+	 */
 	@PostMapping
 	public ResponseEntity<Cliente> inserir(@RequestBody Cliente cliente) throws ServicoException{
 		if (cliente != null) {
@@ -81,6 +97,9 @@ public class ClienteController {
 		}
 	}
 	
+	/**
+	 * Action para atualizacao do cliente determinado nos parametros
+	 */
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Cliente> atualizar(@PathVariable("id") long id, @RequestBody Cliente cliente) throws ServicoException{
 		
@@ -106,6 +125,12 @@ public class ClienteController {
 		}
 	}
 	
+	/**
+	 * Action para deleção do cliente
+	 * @param id
+	 * @return
+	 * @throws ServicoException
+	 */
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<?> deletar(@PathVariable("id") long id) throws ServicoException{
 		Cliente clienteParaDeletar = clienteService.consultarPorCodigo(id);
@@ -123,6 +148,14 @@ public class ClienteController {
 		}
 	}
 	
+	/**
+	 * Action para realizar simulação de emprestimo.
+	 * Deve ser passado como parametro um objeto DadosSimulacaoDTO contendo o codigo do cliente para obtencao da taxa de juros aplicada para ele,
+	 * bem como os dados de simulacao (valor solicitado e meses de duração) 
+	 * @param dadosSimulacao
+	 * @return
+	 * @throws ServicoException
+	 */
 	@PostMapping(path = {"/simular-emprestimo/{id}"})
 	public ResponseEntity<ResultadoSimulacaoDTO> simularEmprestimo(@RequestBody DadosSimulacaoDTO dadosSimulacao) throws ServicoException{
 		ResultadoSimulacaoDTO resultado = emprestimoService.simular(dadosSimulacao);

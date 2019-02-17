@@ -5,6 +5,11 @@ import org.springframework.stereotype.Repository;
 
 import br.com.gilmagno.cadastroclientes.entities.Cliente;
 
+/**
+ * Interface de repositorio do objeto Cliente
+ * @author Gilmagno
+ *
+ */
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
