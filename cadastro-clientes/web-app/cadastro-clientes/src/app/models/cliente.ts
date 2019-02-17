@@ -8,5 +8,4 @@ export class Cliente {
     valorTotalDividas: number;
     atualmenteEmpregado: boolean;
     tipoCliente: number;
-    ativo: boolean;
 }

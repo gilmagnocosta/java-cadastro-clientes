@@ -50,10 +50,10 @@ public class Cliente implements Serializable {
 	@Column(name = "endereco", nullable = false)
 	private String endereco;
 	
-	@Column(name = "valor_patrimonio", nullable = false)
+	@Column(name = "valor_patrimonio")
 	private BigDecimal valorTotalPatrimonio;
 	
-	@Column(name = "valor_dividas", nullable = false)
+	@Column(name = "valor_dividas")
 	private BigDecimal valorTotalDividas;
 	
 	@Column(name = "atualmente_empregado", nullable = false)

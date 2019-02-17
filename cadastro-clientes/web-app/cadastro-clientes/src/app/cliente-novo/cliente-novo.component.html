@@ -34,7 +34,6 @@
           
           <mat-form-field class="example-full-width">
               <select matNativeControl placeholder="Tipo" formControlName="tipoCliente" [errorStateMatcher]="matcher">
-                <option value="">Selecione</option>
                 <option value="1">Comum</option>
                 <option value="2">Especial</option>
                 <option value="3">Potencial</option>
@@ -58,7 +57,6 @@
             <span matPrefix>R$&nbsp;</span>
             <mat-error>
                 <div *ngIf="f.valorTotalPatrimonio.errors">
-                    <span *ngIf="!f.valorTotalPatrimonio.valid && f.valorTotalPatrimonio.touched">Digite o valor total do patrimonio do cliente</span>
                     <span *ngIf="f.valorTotalPatrimonio.errors.ehObrigatorio">Cliente tipo Especial precisa ser informado o valor do patrimonio.</span>
                 </div>          
             </mat-error>
@@ -70,7 +68,6 @@
             <mat-error>
                 <div *ngIf="f.valorTotalDividas.errors">
                   <span *ngIf="f.valorTotalDividas.errors.ehObrigatorio">Cliente tipo Potencial precisa ser informado o valor total das dividas.</span>
-                  <span *ngIf="!f.valorTotalDividas.valid && f.valorTotalDividas.touched">Digite o valor total das dividas do cliente</span>
                 </div>
                 
             </mat-error>

@@ -12,6 +12,11 @@ import lombok.NoArgsConstructor;
 public class DadosSimulacaoDTO {
 	
 	/**
+	 * Codigo do cliente
+	 */
+	private Long codigoCliente;
+	
+	/**
 	 * Valor solicitado para simular o emprestimo.
 	 */
 	private BigDecimal valorSolicitado;
@@ -20,9 +25,4 @@ public class DadosSimulacaoDTO {
 	 * Quantidade de meses de duração do emprestimo a ser simulado
 	 */
 	private Integer mesesDuracao;
-	
-	/**
-	 * Taxa de juros aplicada na simulacao
-	 */
-	private BigDecimal taxaJuros;
 }

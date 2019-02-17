@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 import { Cliente } from '../models/cliente';
 import { ConfigService } from './config.service';
+import { SimulacaoEmprestimo } from '../models/simulacao-emprestimo';
 
 const httpOptions = {
     headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -71,6 +72,14 @@ export class ClienteService {
         return this.http.delete<Cliente>(url, httpOptions).pipe(
             tap(_ => console.log('deletou id=${id}')),
             catchError(this.handleError<Cliente>('deletar'))
+        );
+    }
+
+    simularEmprestimo(dadosSimulacao: SimulacaoEmprestimo): Observable<any> {
+        const url = this.apiUrl + "/simular-emprestimo/" + dadosSimulacao.codigoCliente;
+        return this.http.post(url, dadosSimulacao, httpOptions).pipe(
+            tap(_ => console.log('simulou id=${id}')),
+            catchError(this.handleError<any>('simularEmprestimo'))
         );
     }
 }

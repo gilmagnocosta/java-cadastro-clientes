@@ -82,7 +82,6 @@ public class ClienteServiceImpl implements ClienteService {
 		}catch (Exception e) {
 			throw new ServicoException("Erro ao excluir o cliente!", e);
 		}
-		
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -107,7 +107,11 @@ import { ConfigService } from './services/config.service';
   ],
   providers: [
     ConfigService,
-    ClienteService
+    ClienteService,
+    {
+      provide: LOCALE_ID,
+      useValue: "en-US"
+    }
   ],
   bootstrap: [AppComponent]
 })

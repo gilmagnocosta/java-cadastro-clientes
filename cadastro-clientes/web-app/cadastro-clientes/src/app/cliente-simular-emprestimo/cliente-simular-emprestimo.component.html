@@ -1,4 +1,4 @@
-<div class="example-container mat-elevation-z8">
+<div class="example-container">
     <div class="example-loading-shade"
          *ngIf="isLoadingResults">
       <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -9,39 +9,49 @@
     
     <mat-card class="example-card">
       <form [formGroup]="simulacaoForm" (ngSubmit)="onFormSubmit(simulacaoForm.value)">
-          <h3>Simulação de Emprestimo</h3>
-            <mat-form-field class="example-full-width">
-              <input matInput [(ngModel)]="nomeCliente">
-            </mat-form-field>
+          <h4>Simulação de Emprestimo</h4>
       
+          <mat-form-field class="example-full-width">
+            <input matInput placeholder="Nome do Cliente" disabled value="{{cliente.nome}}">
+          </mat-form-field>
+
             <mat-form-field class="example-full-width">
               <input matInput placeholder="Valor Solicitado" formControlName="valorSolicitado" type="number">
-              <input hidden formControlName="taxaJuros">
+              <span matPrefix>R$&nbsp;</span>
               <mat-error>
-                <span *ngIf="!simulacaoForm.get('valorSolicitado').valid && simulacaoForm.get('valorSolicitado').touched">Digite o valor solicitado</span>
+                  <span *ngIf="simulacaoForm.get('valorSolicitado').errors">Valor minimo é de R$100,00.</span>
               </mat-error>
             </mat-form-field>
       
             <mat-form-field class="example-full-width">
                 <input matInput placeholder="Duração (meses)" formControlName="mesesDuracao" type="number" max="200">
                 <mat-error>
-                  <span *ngIf="!simulacaoForm.get('mesesDuracao').valid && simulacaoForm.get('mesesDuracao').touched">Digite a quantidade de meses de duração do emprestimo</span>
+                  <span *ngIf="simulacaoForm.get('mesesDuracao').errors">Duração minima é de 1 mês e máxima de 200</span>
                 </mat-error>
               </mat-form-field>
 
-            <h4>Resultado</h4>
-            <section class="example-section">
-              <span>{{valorPrestacao}}</span>
-            </section>
+              <div class="button-row">
+                <button type="submit" [disabled]="!simulacaoForm.valid" mat-flat-button color="primary">Simular</button>
+              </div>
 
-            <section class="example-section">
-                <span>{{valorTotal}}</span>
-            </section>
+            <div *ngIf="resultadoSimulacao" class="example-full-width">
+              <hr>
+              <h4>Resultado</h4>
+              <section class="example-section">
+                <mat-label>Valor da Prestação Mensal</mat-label>
+                <div>
+                    <span><b>{{resultadoSimulacao.valorPrestacao | currency:'BRL':true:'1.2-2'}}</b></span>
+                </div>
+              </section>
+              <br>
+              <section class="example-section">
+                  <mat-label>Valor Total ao final do Periodo</mat-label>
+                  <div>
+                      <span><b>{{resultadoSimulacao.valorTotal | currency:'BRL':true:'1.2-2'}}</b></span>
+                  </div>
+              </section>
 
-
-        <div class="button-row">
-          <button type="submit" [disabled]="!simulacaoForm.valid" mat-flat-button color="primary"><mat-icon>save</mat-icon></button>
-        </div>
+            </div>
       </form>
     </mat-card>
   </div>

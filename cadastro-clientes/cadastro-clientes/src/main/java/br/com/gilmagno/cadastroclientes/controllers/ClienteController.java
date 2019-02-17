@@ -1,10 +1,10 @@
 package br.com.gilmagno.cadastroclientes.controllers;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.com.gilmagno.cadastroclientes.dto.DadosSimulacaoDTO;
+import br.com.gilmagno.cadastroclientes.dto.ResultadoSimulacaoDTO;
 import br.com.gilmagno.cadastroclientes.entities.Cliente;
 import br.com.gilmagno.cadastroclientes.exceptions.ServicoException;
 import br.com.gilmagno.cadastroclientes.services.ClienteService;
+import br.com.gilmagno.cadastroclientes.services.EmprestimoService;
 
 @CrossOrigin
 @RestController
@@ -27,10 +30,12 @@ import br.com.gilmagno.cadastroclientes.services.ClienteService;
 public class ClienteController {
 	
 	private final ClienteService clienteService;
+	private final EmprestimoService emprestimoService;
 	
 	@Autowired
-	public ClienteController(ClienteService clienteService) {
+	public ClienteController(ClienteService clienteService, EmprestimoService emprestimoService) {
 		this.clienteService = clienteService;
+		this.emprestimoService = emprestimoService;
 	}
 	
 	@GetMapping
@@ -116,5 +121,12 @@ public class ClienteController {
 					//.header("Access-Control-Allow-Origin", "*")
 					.build();
 		}
+	}
+	
+	@PostMapping(path = {"/simular-emprestimo/{id}"})
+	public ResponseEntity<ResultadoSimulacaoDTO> simularEmprestimo(@RequestBody DadosSimulacaoDTO dadosSimulacao) throws ServicoException{
+		ResultadoSimulacaoDTO resultado = emprestimoService.simular(dadosSimulacao);
+		return ResponseEntity.ok().body(resultado);	
+		
 	}
 }
