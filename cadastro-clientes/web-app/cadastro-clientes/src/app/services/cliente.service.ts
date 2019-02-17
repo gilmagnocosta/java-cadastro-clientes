@@ -17,20 +17,14 @@ const controller = "clientes";
 export class ClienteService {
     
     private apiUrl: string = '';
-    //private headers: Headers;
-    //private options:RequestOptions;
-
+    
     constructor(private http: HttpClient, private configService: ConfigService) { 
         this.apiUrl = 'http://localhost:8080/api/' + controller;
     }
 
     private handleError<T> (operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
-        
-            // TODO: send the error to remote logging infrastructure
-            console.error(error); // log to console instead
-        
-            // Let the app keep running by returning an empty result.
+            console.error(error);
             return of(result as T);
         };
     }

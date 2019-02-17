@@ -41,13 +41,19 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 		
 		try {
 			
-			taxaJuros = obterTaxaJuros(dadosSimulacao.getCodigoCliente());
+			// Obtem o cliente para simular
+			Cliente cliente = clienteRepository.getOne(dadosSimulacao.getCodigoCliente());
 			
+			// Obtem a taxa de juros a ser aplicada
+			taxaJuros = obterTaxaJuros(cliente.getRisco());
+			
+			// Calcula o valor total com juros
 			valorTotalComJuros = dadosSimulacao.getValorSolicitado()
 					.add(dadosSimulacao.getValorSolicitado()
 							.multiply(taxaJuros)
 							.divide(new BigDecimal(100)));
 			
+			// Calcula o valor da parcela
 			valorParcela = valorTotalComJuros
 					.divide(new BigDecimal(dadosSimulacao.getMesesDuracao()), 2, RoundingMode.HALF_EVEN);
 			
@@ -65,14 +71,14 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 	/**
 	 * Obter taxa de juros que deve ser aplicada ao emprestimo do cliente
 	 */
-	private BigDecimal obterTaxaJuros(Long codigoCliente) throws ServicoException {
+	private BigDecimal obterTaxaJuros(String risco) throws ServicoException {
 		try {
 			BigDecimal taxa = new BigDecimal(0);
 			
-			Cliente cliente = clienteRepository.getOne(codigoCliente);
 			
-			if (cliente != null) {
-				switch (cliente.getRisco()) {
+			
+			if (risco != null) {
+				switch (risco) {
 				case "A":
 					taxa = new BigDecimal(1.9);
 					break;
@@ -92,5 +98,5 @@ public class EmprestimoServiceImpl implements EmprestimoService {
 		}catch (Exception e) {
 			throw new ServicoException("Erro ao consultar o cliente", e);
 		}
-	}	
+	}
 }

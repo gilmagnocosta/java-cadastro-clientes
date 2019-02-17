@@ -1,4 +1,4 @@
-<div class="example-container mat-elevation-z8">
+<div class="example-container">
   <div class="example-loading-shade"
        *ngIf="isLoadingResults">
     <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -15,7 +15,7 @@
           </mat-form-field>
     
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Nome do Cliente" formControlName="nome"
+            <input matInput placeholder="Nome do Cliente" formControlName="nome" maxlength="40"
                    [errorStateMatcher]="matcher">
             <mat-error>
               <span *ngIf="!clienteForm.get('nome').valid && clienteForm.get('nome').touched">Digite o nome do cliente</span>
@@ -23,7 +23,7 @@
           </mat-form-field>
     
           <mat-form-field class="example-full-width">
-            <input matInput placeholder="Endereço" formControlName="endereco"
+            <input matInput placeholder="Endereço" formControlName="endereco" maxlength="50"
                    [errorStateMatcher]="matcher">
             <mat-error>
               <span *ngIf="!clienteForm.get('endereco').valid && clienteForm.get('endereco').touched">Digite o endereço do cliente</span>
