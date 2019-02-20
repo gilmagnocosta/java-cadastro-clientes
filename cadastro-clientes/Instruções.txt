@@ -1,0 +1,21 @@
+Segue instruções basicas para execução do projeto.
+
+O projeto se divide em 2 diretorios:
+
+cadastro-clientes
+	Localizado todo o codigo fonte do aplicação API Rest.
+	Arquitetura: Spring, Hibernate, REST, MySQL, JUnit, Mockito
+	
+	Instruções para execução
+	- Criar banco de dados em banco MySQL
+	- Alterar as configurações de conexao ao banco no arquivo application.properties
+	- A API está rodando na porta padrão 8080
+
+web-app
+	Localizado todo o codigo fonte a aplicação web (front-end)
+	Arquitetura: Angular 7, Angular Material
+	
+	Instruções para execução
+	- Baixar os pacotes do node atravez do comando: npm install
+	- Alterar variavel "apiUrl" do arquivo cliente.service.ts(localizado em web-app\cadastro-clientes\src\app\services) apontando para o URL da API (caso necessite)
+	
